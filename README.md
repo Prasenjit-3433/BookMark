@@ -5,7 +5,7 @@ Tech Stack: HTML, CSS, Vanilla JS (no framework!).
 
 SCREENSHOTS:
 
-![](Book%20Keeper%20.gif)
+![](Book%20Keeper-demo.gif)
 
 
 IMPLEMENTATION:
