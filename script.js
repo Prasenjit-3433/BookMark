@@ -6,7 +6,12 @@ const websiteNameElement = document.getElementById('website-name');
 const websiteUrlElement = document.getElementById('website-url');
 const bookmarkContainer = document.getElementById('bookmarks-container');
 
-let bookmarks = [];
+let bookmarks = {};
+
+// Create Unique Id
+function createUniqueId() {
+    return Math.random().toString(16).slice(2);
+}
 
 // Show Modal, Focus on Input
 function showModal() {
@@ -34,12 +39,11 @@ function validate(nameValue, urlValue) {
 }
 
 // Delete Bookmark
-function deleteBookmark(url) {
-    bookmarks.forEach((bookmarkItem, index) => {
-        if (bookmarkItem.url === url) {
-            bookmarks.splice(index, 1);
-        }
-    });
+function deleteBookmark(id) {
+    // Loop through the bookmarks array
+	if (bookmarks[id]) {
+		delete bookmarks[id];
+	}
     // Update Bookmark Array in localStorage, re-populate DOM
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
     fetchBookmark();
@@ -51,8 +55,8 @@ function buildBookmarks() {
     // Reset bookmark container before adding new one
     bookmarkContainer.textContent = '';
     // Build Items
-    bookmarks.forEach((bookmarkItem) => {
-        const {name, url} = bookmarkItem;
+    Object.keys(bookmarks).forEach((id) => {
+        const {name, url} = bookmarks[id];
         // Item
         const item = document.createElement('div');
         item.classList.add('item');
@@ -60,7 +64,7 @@ function buildBookmarks() {
         const trashIcon = document.createElement('i');
         trashIcon.classList.add('fa-light', 'fa-trash-can');
         trashIcon.setAttribute('title', 'Delete');
-        trashIcon.setAttribute('onclick', `deleteBookmark('${url}')`);
+        trashIcon.setAttribute('onclick', `deleteBookmark('${id}')`);
         // Favicon & Link Container
         const linkInfo = document.createElement('div');
         linkInfo.classList.add('name');
@@ -88,12 +92,11 @@ function fetchBookmark() {
         bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
     }else {
         // Create boolmark array in localStorage
-        bookmarks = [
-            {
-                name: 'Github Profile',
-                url: 'https://github.com/Prasenjit-3433/'
-            },
-        ];
+        const id = createUniqueId();
+		bookmarks[id] = {
+			name: 'Github',
+			url: 'https://github.com/Prasenjit-3433',
+		}
         localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
     }
 
@@ -112,13 +115,13 @@ function storeBookmark(event) {
     if (!validate(nameValue, urlValue)) {
         return;
     }
-
+    // Set bookmark object, add to array
     const bookmark = {
         name: nameValue,
         url: urlValue
     };
-
-    bookmarks.push(bookmark);
+    const newId = createUniqueId();
+    bookmarks[newId] = bookmark;
     localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
     fetchBookmark();
     bookmarkForm.reset();
