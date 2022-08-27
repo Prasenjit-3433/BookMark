@@ -13,5 +13,5 @@ IMPLEMENTATION:
 matches the desired url format. [read more](https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url).
 * Once an user entered a valid website name & url, then our next job is to save that data into `localStorage` and `fetch` that data from it on the load of the website.
 * As a result, even if the user leaves the website & later visits the page again, all the bookmark information doesn't get lost!.
-
+* Now we need to connect our `modal` to `Bookmark UI` and this is done in this way: `modal` ---> `localStorage` ---> `Bookmark UI`.
 
