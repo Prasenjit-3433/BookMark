@@ -12,7 +12,22 @@ function showModal() {
     websiteNameElement.focus();
 }
 
+// Handle data from form:
+function storeBookmark(event) {
+    event.preventDefault();
+    const nameValue = websiteNameElement.value;
+    let urlValue = websiteUrlElement.value;
+    console.log('website: ', nameValue);
+    if (!urlValue.includes('http://') && !urlValue.includes('https://')) {
+        urlValue = `https://${urlValue}`;
+    }
+    console.log('url: ', urlValue);
+}
+
 // Modal Event Listeners
 modalShow.addEventListener('click', showModal);
 modalClose.addEventListener('click', () => modal.classList.remove('show-modal'));
 window.addEventListener('click', (event) => (event.target === modal ? modal.classList.remove('show-modal') : false));
+
+// Event Listener
+bookmarkForm.addEventListener('submit', storeBookmark);
