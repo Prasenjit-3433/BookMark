@@ -6,9 +6,12 @@ const websiteNameElement = document.getElementById('website-name');
 const websiteUrlElement = document.getElementById('website-url');
 const bookmarkContainer = document.getElementById('bookmarks-container');
 
+let bookmarks = [];
+
 // Show Modal, Focus on Input
 function showModal() {
     modal.classList.add('show-modal');
+    // puts cursor in the website name field
     websiteNameElement.focus();
 }
 
@@ -30,22 +33,48 @@ function validate(nameValue, urlValue) {
     return true;
 }
 
+// Fetch Bookmarks
+function fetchBookmark() {
+    // Get bookmarks from localStorage if available
+    if (localStorage.getItem('bookmarks')) {
+        bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+    }else {
+        // Create boolmark array in localStorage
+        bookmarks = [
+            {
+                name: 'my github profile',
+                url: 'https://github.com/Prasenjit-3433/'
+            },
+        ];
+        localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+    }
+
+    console.log(bookmarks);
+}
+
 // Handle data from form:
 function storeBookmark(event) {
     event.preventDefault();
     const nameValue = websiteNameElement.value;
     let urlValue = websiteUrlElement.value;
-    console.log('website: ', nameValue);
     if (!urlValue.includes('http://') && !urlValue.includes('https://')) {
         urlValue = `https://${urlValue}`;
     }
-    console.log('url: ', urlValue);
+
     if (!validate(nameValue, urlValue)) {
         return;
     }
-    
-    websiteNameElement.value = '';
-    websiteUrlElement.value = '';
+
+    const bookmark = {
+        name: nameValue,
+        url: urlValue
+    };
+
+    bookmarks.push(bookmark);
+    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+    fetchBookmark();
+    bookmarkForm.reset();
+    websiteNameElement.focus();
 }
 
 // Modal Event Listeners
@@ -55,3 +84,6 @@ window.addEventListener('click', (event) => (event.target === modal ? modal.clas
 
 // Event Listener
 bookmarkForm.addEventListener('submit', storeBookmark);
+
+// On Load, Fetch Bookmarks
+fetchBookmark();
