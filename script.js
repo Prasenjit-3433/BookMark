@@ -33,8 +33,23 @@ function validate(nameValue, urlValue) {
     return true;
 }
 
+// Delete Bookmark
+function deleteBookmark(url) {
+    bookmarks.forEach((bookmarkItem, index) => {
+        if (bookmarkItem.url === url) {
+            bookmarks.splice(index, 1);
+        }
+    });
+    // Update Bookmark Array in localStorage, re-populate DOM
+    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+    fetchBookmark();
+    
+}
+
 // Build Bookmarks DOM
 function buildBookmarks() {
+    // Reset bookmark container before adding new one
+    bookmarkContainer.textContent = '';
     // Build Items
     bookmarks.forEach((bookmarkItem) => {
         const {name, url} = bookmarkItem;
@@ -62,7 +77,7 @@ function buildBookmarks() {
         // Append to bookmarks container
         linkInfo.append(favicon, link);
         item.append(trashIcon, linkInfo);
-        bookmarkContainer.appendChild(item);
+        bookmarkContainer.append(item);
     });
 }
 
@@ -75,7 +90,7 @@ function fetchBookmark() {
         // Create boolmark array in localStorage
         bookmarks = [
             {
-                name: 'my github profile',
+                name: 'Github Profile',
                 url: 'https://github.com/Prasenjit-3433/'
             },
         ];

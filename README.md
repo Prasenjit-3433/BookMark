@@ -15,3 +15,4 @@ matches the desired url format. [read more](https://stackoverflow.com/questions/
 * As a result, even if the user leaves the website & later visits the page again, all the bookmark information doesn't get lost!.
 * Now we need to connect our `modal` to `Bookmark UI` and this is done in this way: `modal` ---> `localStorage` ---> `Bookmark UI`.
 
+* At last, on the click on `trash` icon in a bookmark, delete that bookmark from UI & also update `localStorage`.
