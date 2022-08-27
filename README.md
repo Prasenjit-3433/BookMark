@@ -1,7 +1,12 @@
-# BookMark
+# BookMark  [[Link]](https://storebookmark.netlify.app/)
 A BookMark app feat. [LocalStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
 
 Tech Stack: HTML, CSS, Vanilla JS (no framework!).
+
+SCREENSHOTS:
+
+![](Book%20Keeper%20.gif)
+
 
 IMPLEMENTATION:
 * we added an `SVG` as a hero image because an svg can scale upto any size according as the size of the viewport.
